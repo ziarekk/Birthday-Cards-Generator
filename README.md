@@ -1,4 +1,4 @@
-Jest to proejkt zaliczeniowy na przemdiot PIPR.
+**Jest to proejkt zaliczeniowy na przemdiot PIPR.**
 
-Program generuje w losowy sposób kartki urodzinowe na podstawie podanego imienia solenizanta.
-Program rozpoznaje płeć i w odopwiedni sposób dobiera styl kartki.
+Podstawowa funkcjonalność programu to generowanie kartek urodzinowych na podstawie podanego imienia.
+Program rozponaje płeć solenizanta i na tej podstawie dobiera odpowiedni styl kartki urodzinowej.
