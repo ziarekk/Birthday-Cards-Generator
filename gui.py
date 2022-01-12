@@ -1,7 +1,7 @@
 from ui_generatorWindow import Ui_MainWindow
 from ui_dailog import Ui_dialogWindow
 from PySide2.QtWidgets import QApplication, QMainWindow
-from generator import generate_Card
+from generator import generate_Card, Person
 
 import sys
 
@@ -11,13 +11,18 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.generateCard.clicked.connect(self.OpenCardWindow)
 
-    def OpenCardWindow(self):
+        def openCard():
+            person = self.getPerson()
+            self.OpenCardWindow(person)
+
+        self.ui.generateCard.clicked.connect(openCard)
+
+    def OpenCardWindow(self, person):
         self.window = QMainWindow()
         self.ui = Ui_dialogWindow()
         self.ui.setupUi(self.window)
-        image = generate_Card()
+        image = generate_Card(person)
         self.ui.imageViewer.setPixmap(image[1])
         self.window.show()
 
@@ -29,6 +34,10 @@ class MainWindow(QMainWindow):
 
     def saveImg(self, image):
         image.save("BirthdayCard", "PNG")
+
+    def getPerson(self):
+        person = Person(self.ui.nameEdit.text())
+        return person
 
 
 def guiMain(args):

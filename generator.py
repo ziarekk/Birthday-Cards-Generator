@@ -21,11 +21,11 @@ def getBackground():
     return random.choice(list(backgroundsDict))
 
 
-def imageConversion(base, txt, fnt):
+def imageConversion(person, base, txt, fnt):
     pilImage = Image.alpha_composite(base, txt)
     draw = ImageDraw.Draw(txt)
     draw.text((150, 40), "Hello", font=fnt, fill=(56, 123, 12, 128))
-    draw.text((150, 100), "World", font=fnt, fill=(56, 123, 12, 255))
+    draw.text((150, 100), person.name(), font=fnt, fill=(56, 123, 12, 255))
     pilImage = Image.alpha_composite(base, txt)
 
     qtImage = ImageQt.ImageQt(pilImage)
@@ -33,12 +33,12 @@ def imageConversion(base, txt, fnt):
     return (pilImage, qtPixmap)
 
 
-def generate_Card():
+def generate_Card(person):
     imgBase = getBackground()
     with Image.open(backgroundsDict[imgBase]).convert("RGBA") as base:
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
         fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 80)
-        pilImage, qtPixmap = imageConversion(base, txt, fnt)
+        pilImage, qtPixmap = imageConversion(person, base, txt, fnt)
 
     return (pilImage, qtPixmap)
 
