@@ -29,8 +29,18 @@ class MainWindow(QMainWindow):
         def save():
             self.saveImg(image[0])
 
-        self.ui.closeTab.clicked.connect(self.window.close)
+        def onClose():
+            self.window = QMainWindow()
+            self.ui = Ui_MainWindow()
+
+        self.ui.closeTab.clicked.connect(onClose)
         self.ui.saveImage.clicked.connect(save)
+
+    def OpenWindow(self, person):
+        self.window = QMainWindow()
+        self.ui = Ui_dialogWindow()
+        self.ui.setupUi(self.window)
+        self.window.show()
 
     def saveImg(self, image):
         image.save("BirthdayCard", "PNG")

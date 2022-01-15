@@ -1,6 +1,8 @@
+from PySide2.QtGui import QPixmap
 from PIL import Image, ImageQt
 from PIL import ImageDraw, ImageFont
-from PySide2.QtGui import QPixmap
+
+from dictionaries import backgroundImages, Wishes
 
 import requests
 import random
@@ -8,37 +10,67 @@ import random
 
 urlBasic = 'https://api.genderize.io?name={personName}'
 
-backgroundsDict = {
-    'back_1': "Background_imgs/back_1.jpg",
-    'back_2': "Background_imgs/back_2.jpg",
-    'back_3': "Background_imgs/back_3.jpg",
-    'back_4': "Background_imgs/back_4.jpg"
 
-}
+def getBackground(gender):
+    item = 'buffer'
+    itemGender = backgroundImages[item]['gender']
+    while itemGender != gender and itemGender != 'unisex':
+        item = random.choice(list(backgroundImages))
+        itemGender = backgroundImages[item]['gender']
 
-
-def getBackground():
-    return random.choice(list(backgroundsDict))
+    return item
 
 
-def imageConversion(person, base, txt, fnt):
+def getWishes(gender):
+    wishes = 'buffer'
+    wishesStyle = Wishes[wishes]['gender']
+    while wishesStyle != gender and wishesStyle != 'unisex':
+        wishes = random.choice(list(Wishes))
+        wishesStyle = Wishes[wishes]['gender']
+
+    return wishes
+
+
+def addTextBackground(base):
+    with Image.open("Background_imgs/text_block.png") as text_block:
+        base = Image.alpha_composite(base, text_block)
+    txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
+    return base, txt
+
+
+def drawText(person, base, wishes):
+    fnt_src = Wishes[wishes]['fnt_src']
+    fnt_size = Wishes[wishes]['fnt_size']
+    font = ImageFont.truetype(fnt_src, fnt_size)
+    base, txt = addTextBackground(base)
+
     pilImage = Image.alpha_composite(base, txt)
     draw = ImageDraw.Draw(txt)
-    draw.text((150, 40), "Hello", font=fnt, fill=(56, 123, 12, 128))
-    draw.text((150, 100), person.name(), font=fnt, fill=(56, 123, 12, 255))
+
+    text1 = f'Hey {person.name()}!'
+    wishesText = Wishes[wishes]['text']
+
+    draw.text((400, 300), text1, font=font, fill=(56, 123, 12, 128))
+    draw.text((400, 345), wishesText, font=font, fill=(56, 123, 12, 255))
     pilImage = Image.alpha_composite(base, txt)
 
+    return pilImage
+
+
+def imageConversion(person, base, wishes):
+    pilImage = drawText(person, base, wishes)
     qtImage = ImageQt.ImageQt(pilImage)
     qtPixmap = QPixmap.fromImage(qtImage)
     return (pilImage, qtPixmap)
 
 
 def generate_Card(person):
-    imgBase = getBackground()
-    with Image.open(backgroundsDict[imgBase]).convert("RGBA") as base:
-        txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
-        fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 80)
-        pilImage, qtPixmap = imageConversion(person, base, txt, fnt)
+    imgBase = getBackground(person.gender())
+    source = backgroundImages[imgBase]['source']
+
+    with Image.open(source).convert("RGBA") as base:
+        wishes = getWishes(person.gender())
+        pilImage, qtPixmap = imageConversion(person, base, wishes)
 
     return (pilImage, qtPixmap)
 

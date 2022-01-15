@@ -17,7 +17,7 @@ class Ui_dialogWindow(object):
     def setupUi(self, dialogWindow):
         if not dialogWindow.objectName():
             dialogWindow.setObjectName(u"dialogWindow")
-        dialogWindow.resize(657, 550)
+        dialogWindow.resize(818, 731)
         self.centralwidget = QWidget(dialogWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -34,8 +34,14 @@ class Ui_dialogWindow(object):
 
         self.imageViewer = QLabel(self.centralwidget)
         self.imageViewer.setObjectName(u"imageViewer")
-        self.imageViewer.setMinimumSize(QSize(626, 417))
-        self.imageViewer.setMaximumSize(QSize(626, 417))
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.imageViewer.sizePolicy().hasHeightForWidth())
+        self.imageViewer.setSizePolicy(sizePolicy)
+        self.imageViewer.setMinimumSize(QSize(1200, 900))
+        self.imageViewer.setMaximumSize(QSize(1200, 900))
+        self.imageViewer.setBaseSize(QSize(1600, 1200))
 
         self.verticalLayout.addWidget(self.imageViewer)
 
@@ -57,7 +63,7 @@ class Ui_dialogWindow(object):
         dialogWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(dialogWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 657, 22))
+        self.menubar.setGeometry(QRect(0, 0, 818, 22))
         dialogWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(dialogWindow)
         self.statusbar.setObjectName(u"statusbar")
