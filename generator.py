@@ -31,34 +31,34 @@ def getWishes(gender):
     return wishes
 
 
-def addTextBackground(base):
+def setBaseImage(base, wishes):
     with Image.open("Background_imgs/text_block.png") as text_block:
         base = Image.alpha_composite(base, text_block)
     txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
-    return base, txt
-
-
-def drawText(person, base, wishes):
     fnt_src = Wishes[wishes]['fnt_src']
     fnt_size = Wishes[wishes]['fnt_size']
     font = ImageFont.truetype(fnt_src, fnt_size)
-    base, txt = addTextBackground(base)
+    return base, txt, font
 
+
+def drawText(person, base, wishes, imgBase):
+    base, txt, font = setBaseImage(base, wishes)
     pilImage = Image.alpha_composite(base, txt)
     draw = ImageDraw.Draw(txt)
+    fntColor = backgroundImages[imgBase]['fill']
 
     text1 = f'Hey {person.name()}!'
     wishesText = Wishes[wishes]['text']
 
-    draw.text((400, 300), text1, font=font, fill=(56, 123, 12, 128))
-    draw.text((400, 345), wishesText, font=font, fill=(56, 123, 12, 255))
+    draw.text((400, 300), text1, font=font, fill=fntColor)
+    draw.text((400, 345), wishesText, font=font, fill=fntColor)
     pilImage = Image.alpha_composite(base, txt)
 
     return pilImage
 
 
-def imageConversion(person, base, wishes):
-    pilImage = drawText(person, base, wishes)
+def imageConversion(person, base, wishes, imgBase):
+    pilImage = drawText(person, base, wishes, imgBase)
     qtImage = ImageQt.ImageQt(pilImage)
     qtPixmap = QPixmap.fromImage(qtImage)
     return (pilImage, qtPixmap)
@@ -67,10 +67,11 @@ def imageConversion(person, base, wishes):
 def generate_Card(person):
     imgBase = getBackground(person.gender())
     source = backgroundImages[imgBase]['source']
+    wishes = getWishes(person.gender())
 
     with Image.open(source).convert("RGBA") as base:
-        wishes = getWishes(person.gender())
-        pilImage, qtPixmap = imageConversion(person, base, wishes)
+
+        pilImage, qtPixmap = imageConversion(person, base, wishes, imgBase)
 
     return (pilImage, qtPixmap)
 
