@@ -1,58 +1,52 @@
-from ui_generatorWindow import Ui_MainWindow
-from ui_dailog import Ui_dialogWindow
+from ui_mainMenu import Ui_MainMenu
+from generatorWindow import GeneratorDialog
 from PySide2.QtWidgets import QApplication, QMainWindow
-from generator import generate_Card, Person
 
 import sys
 
 
-class MainWindow(QMainWindow):
+class MainMenu(QMainWindow):
+    """
+    MainMenu Window, displays stack:
+    [page 0] shows main menu and calendar.
+    [page 1] shows info about the author and credits
+    MainMenu consits of 2 buttons:
+        goCredits: changes stackIndex showing info about author&credits
+        goGenerator: opens up window with iteractive Birthday Card Generator
+    """
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
+        self.ui.stack.setCurrentIndex(0)
 
-        def openCard():
-            person = self.getPerson()
-            self.OpenCardWindow(person)
+        self.ui.goCredits.clicked.connect(self._openCredits)
+        self.ui.goGenerator.clicked.connect(self._openGenerator)
+        self.ui.returnMenu.clicked.connect(self._returnToMainMenu)
 
-        self.ui.generateCard.clicked.connect(openCard)
+    def _openCredits(self):
+        """
+        Changes stack, showing user author&credits
+        """
+        self.ui.stack.setCurrentIndex(1)
 
-    def OpenCardWindow(self, person):
-        self.window = QMainWindow()
-        self.ui = Ui_dialogWindow()
-        self.ui.setupUi(self.window)
-        image = generate_Card(person)
-        self.ui.imageViewer.setPixmap(image[1])
-        self.window.show()
+    def _returnToMainMenu(self):
+        """
+        Returns user back to main menu
+        """
+        self.ui.stack.setCurrentIndex(0)
 
-        def save():
-            self.saveImg(image[0])
-
-        def onClose():
-            self.window = QMainWindow()
-            self.ui = Ui_MainWindow()
-
-        self.ui.closeTab.clicked.connect(onClose)
-        self.ui.saveImage.clicked.connect(save)
-
-    def OpenWindow(self, person):
-        self.window = QMainWindow()
-        self.ui = Ui_dialogWindow()
-        self.ui.setupUi(self.window)
-        self.window.show()
-
-    def saveImg(self, image):
-        image.save("BirthdayCard", "PNG")
-
-    def getPerson(self):
-        person = Person(self.ui.nameEdit.text())
-        return person
+    def _openGenerator(self):
+        """
+        Opens dialog window with generator
+        """
+        self.w = GeneratorDialog()
+        self.w.show()
 
 
 def guiMain(args):
     app = QApplication(args)
-    window = MainWindow()
+    window = MainMenu()
     window.show()
     return app.exec_()
 

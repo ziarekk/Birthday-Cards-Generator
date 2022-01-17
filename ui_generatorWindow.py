@@ -13,12 +13,12 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(415, 200)
-        self.centralwidget = QWidget(MainWindow)
+class Ui_GeneratorWindow(object):
+    def setupUi(self, GeneratorWindow):
+        if not GeneratorWindow.objectName():
+            GeneratorWindow.setObjectName(u"GeneratorWindow")
+        GeneratorWindow.resize(530, 267)
+        self.centralwidget = QWidget(GeneratorWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -26,11 +26,19 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
+        font = QFont()
+        font.setFamily(u"Kinnari")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label.setFont(font)
 
         self.verticalLayout.addWidget(self.label)
 
         self.nameEdit = QLineEdit(self.centralwidget)
         self.nameEdit.setObjectName(u"nameEdit")
+        self.nameEdit.setFont(font)
 
         self.verticalLayout.addWidget(self.nameEdit)
 
@@ -43,31 +51,36 @@ class Ui_MainWindow(object):
 
         self.generateCard = QPushButton(self.centralwidget)
         self.generateCard.setObjectName(u"generateCard")
-        font = QFont()
-        font.setFamily(u"aakar")
-        font.setPointSize(12)
-        self.generateCard.setFont(font)
+        font1 = QFont()
+        font1.setFamily(u"Kinnari")
+        font1.setPointSize(16)
+        font1.setBold(True)
+        font1.setItalic(True)
+        font1.setWeight(75)
+        self.generateCard.setFont(font1)
+        self.generateCard.setCursor(QCursor(Qt.PointingHandCursor))
+        self.generateCard.setAutoFillBackground(False)
 
         self.verticalLayout_2.addWidget(self.generateCard)
 
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
+        GeneratorWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(GeneratorWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 415, 22))
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
+        self.menubar.setGeometry(QRect(0, 0, 530, 22))
+        GeneratorWindow.setMenuBar(self.menubar)
+        self.statusbar = QStatusBar(GeneratorWindow)
         self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        GeneratorWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(GeneratorWindow)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(GeneratorWindow)
     # setupUi
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Birthday Card Generator", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Type here name of the person that you want to send wishes...", None))
+    def retranslateUi(self, GeneratorWindow):
+        GeneratorWindow.setWindowTitle(QCoreApplication.translate("GeneratorWindow", u"Birthday Card Generator", None))
+        self.label.setText(QCoreApplication.translate("GeneratorWindow", u"Type here name of the person that you want to send wishes...", None))
         self.nameEdit.setText("")
-        self.generateCard.setText(QCoreApplication.translate("MainWindow", u"Generate Card!", None))
+        self.generateCard.setText(QCoreApplication.translate("GeneratorWindow", u"Generate Card!", None))
     # retranslateUi
 

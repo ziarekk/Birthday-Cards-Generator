@@ -10,38 +10,30 @@ import requests
 import random
 
 
-def getBackground(gender):
+def getItem(gender, dict):
+    """
+    Function randomly chooses item from the dictionary.
+    Its choose depends on the gender of the person.
+    It can be used to choose: background, frame or wishes.
+    Returns choosen item.
+    """
     item = 'buffer'
-    itemGender = backgroundImages[item]['gender']
+    itemGender = dict[item]['gender']
     while itemGender != gender and itemGender != 'unisex':
-        item = random.choice(list(backgroundImages))
-        itemGender = backgroundImages[item]['gender']
+        item = random.choice(list(dict))
+        itemGender = dict[item]['gender']
 
     return item
 
 
-def getWishes(gender):
-    wishes = 'buffer'
-    wishesStyle = Wishes[wishes]['gender']
-    while wishesStyle != gender and wishesStyle != 'unisex':
-        wishes = random.choice(list(Wishes))
-        wishesStyle = Wishes[wishes]['gender']
-
-    return wishes
-
-
-def getFrame(gender):
-    frame = 'buffer'
-    frameStyle = Frames[frame]['gender']
-    while frameStyle != gender and frameStyle != 'unisex':
-        frame = random.choice(list(Frames))
-        frameStyle = Frames[frame]['gender']
-
-    return frame
-
-
 def setBaseImage(person, base, wishes):
-    frame = getFrame(person.gender())
+    """
+    Function sets base for the bithday card.
+    Function gets random frame and combines it with background.
+    Creates base for the text, and gets info about the font.
+    Returns: combined background, base for the text, font size and source.
+    """
+    frame = getItem(person.gender(), Frames)
     with Image.open(Frames[frame]['source']) as frame_block:
         base = Image.alpha_composite(base, frame_block)
     txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
@@ -50,7 +42,11 @@ def setBaseImage(person, base, wishes):
     return base, txt, font
 
 
-def drawText2(txt, wishes, font):
+def drawText(txt, wishes, font):
+    """
+    Function draws wishes text in the center spot of the card.
+    Returns image with text drawn on it, ready to be combined.
+    """
     draw = ImageDraw.Draw(txt)
     text = Wishes[wishes]['text']
     boundingBox = [150, 150, 1050, 1050]
@@ -65,43 +61,66 @@ def drawText2(txt, wishes, font):
     return txt
 
 
-def combineImage(person, base, wishes, imgBase):
+def combineImage(person, base, wishes):
+    """
+    Function combines base (generated with setBaseImage function)
+    and image with wishes text (generated with drawText function)
+    Returns birthday card in PIL.Image format.
+    """
+
     base, txt, font = setBaseImage(person, base, wishes)
     pilImage = Image.alpha_composite(base, txt)
-
-    txt = drawText2(txt, wishes, font)
+    txt = drawText(txt, wishes, font)
     pilImage = Image.alpha_composite(base, txt)
 
     return pilImage
 
 
-def imageConversion(person, base, wishes, imgBase):
-    pilImage = combineImage(person, base, wishes, imgBase)
+def imageConversion(pilImage):
+    """
+    Function converts PIL.Image to QPixamp
+    """
     qtImage = ImageQt.ImageQt(pilImage)
     qtPixmap = QPixmap.fromImage(qtImage)
-    return (pilImage, qtPixmap)
+    return qtPixmap
 
 
 def generate_Card(person):
-    imgBase = getBackground(person.gender())
+    """
+    Function generates Birthday Card.
+    Retruns it as PIL.Image and QPixamp
+    """
+
+    imgBase = getItem(person.gender(), backgroundImages)
     source = backgroundImages[imgBase]['source']
-    wishes = getWishes(person.gender())
+    wishes = getItem(person.gender(), Wishes)
 
     with Image.open(source).convert("RGBA") as base:
-
-        pilImage, qtPixmap = imageConversion(person, base, wishes, imgBase)
+        pilImage = combineImage(person, base, wishes)
+        qtPixmap = imageConversion(pilImage)
 
     return (pilImage, qtPixmap)
 
 
 class Person():
+    """
+    Class Person,
+    variable - name (str)
+    method name: returns name of the person
+    method gender: returns assumed gender of the person
+    """
     def __init__(self, name):
         self._name = name
 
     def name(self):
+
         return self._name
 
     def gender(self):
+        """
+        Method returns assumed gender of the person based on their name,
+        using API from genderize.io
+        """
         nameInfo = requests.get(urlBasic.format(personName=self.name())).json()
         gender = nameInfo['gender']
         return gender

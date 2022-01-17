@@ -1,24 +1,26 @@
-from ui_dailog import Ui_dialogWindow
-from PySide2.QtWidgets import QDialog
+from ui_dialog import Ui_dialogWindow
+from PySide2.QtWidgets import QMainWindow
 
 from generator import generate_Card
 
 
-class ReceiptDialog(QDialog):
+class ShowingCardDialog(QMainWindow):
+    """
+    Class ShowingCardDialog.
+    It is responisble for generating and showing birthday card.
+
+
+    """
     def __init__(self, person, parent=None):
         super().__init__(parent)
         self.ui = Ui_dialogWindow()
         self.ui.setupUi(self)
         image = generate_Card(person)
         self.ui.imageViewer.setPixmap(image[1])
-        self.window.show()
 
-        def save():
-            self.saveImg(image[0])
+        def saveImage():
+            # function saves generated card as BirthdayCard.png
+            image[0].save("BirthdayCard", "PNG")
 
-        def onClose():
-            self.window.close()
-            self.__init__()
-
-        self.ui.closeTab.clicked.connect(onClose)
-        self.ui.saveImage.clicked.connect(save)
+        self.ui.closeTab.clicked.connect(self.close)
+        self.ui.saveImage.clicked.connect(saveImage)

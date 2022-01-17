@@ -11,8 +11,7 @@ wishes3_2 = '\n year ahead.\n \nMake every \nday count!'
 backgroundImages = {
     'buffer':
         {"source": "no",
-         "gender": "no",
-         "fill": (0, 0, 0, 0)},
+         "gender": "no"},
     'back_1':
         {"source": "Background_imgs/back_1.jpg",
          "gender": "female"},
