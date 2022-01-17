@@ -2,13 +2,12 @@ from PySide2.QtGui import QPixmap
 from PIL import Image, ImageQt
 from PIL import ImageDraw, ImageFont
 
-from dictionaries import backgroundImages, Wishes
+from constants import Frames, backgroundImages, Wishes
+from constants import mainFont, fntSrc
+from constants import urlBasic
 
 import requests
 import random
-
-
-urlBasic = 'https://api.genderize.io?name={personName}'
 
 
 def getBackground(gender):
@@ -31,34 +30,53 @@ def getWishes(gender):
     return wishes
 
 
-def setBaseImage(base, wishes):
-    with Image.open("Background_imgs/text_block.png") as text_block:
-        base = Image.alpha_composite(base, text_block)
+def getFrame(gender):
+    frame = 'buffer'
+    frameStyle = Frames[frame]['gender']
+    while frameStyle != gender and frameStyle != 'unisex':
+        frame = random.choice(list(Frames))
+        frameStyle = Frames[frame]['gender']
+
+    return frame
+
+
+def setBaseImage(person, base, wishes):
+    frame = getFrame(person.gender())
+    with Image.open(Frames[frame]['source']) as frame_block:
+        base = Image.alpha_composite(base, frame_block)
     txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
-    fnt_src = Wishes[wishes]['fnt_src']
-    fnt_size = Wishes[wishes]['fnt_size']
-    font = ImageFont.truetype(fnt_src, fnt_size)
+    fntSize = Wishes[wishes]['fntSize']
+    font = ImageFont.truetype(fntSrc, fntSize)
     return base, txt, font
 
 
-def drawText(person, base, wishes, imgBase):
-    base, txt, font = setBaseImage(base, wishes)
-    pilImage = Image.alpha_composite(base, txt)
+def drawText2(txt, wishes, font):
     draw = ImageDraw.Draw(txt)
-    fntColor = backgroundImages[imgBase]['fill']
+    text = Wishes[wishes]['text']
+    boundingBox = [150, 150, 1050, 1050]
+    shadowFont = Wishes[wishes]['shadowColor']
+    x1, y1, x2, y2 = boundingBox
+    w, h = draw.textsize(text, font=font)
+    x = (x2 - x1 - w)/2 + x1
+    y = (y2 - y1 - h)/2 + y1
+    draw.text((x-4, y-4), text, align='center', font=font, fill=shadowFont)
+    draw.text((x, y), text, align='center', font=font, fill=mainFont)
 
-    text1 = f'Hey {person.name()}!'
-    wishesText = Wishes[wishes]['text']
+    return txt
 
-    draw.text((400, 300), text1, font=font, fill=fntColor)
-    draw.text((400, 345), wishesText, font=font, fill=fntColor)
+
+def combineImage(person, base, wishes, imgBase):
+    base, txt, font = setBaseImage(person, base, wishes)
+    pilImage = Image.alpha_composite(base, txt)
+
+    txt = drawText2(txt, wishes, font)
     pilImage = Image.alpha_composite(base, txt)
 
     return pilImage
 
 
 def imageConversion(person, base, wishes, imgBase):
-    pilImage = drawText(person, base, wishes, imgBase)
+    pilImage = combineImage(person, base, wishes, imgBase)
     qtImage = ImageQt.ImageQt(pilImage)
     qtPixmap = QPixmap.fromImage(qtImage)
     return (pilImage, qtPixmap)
