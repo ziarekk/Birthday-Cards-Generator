@@ -1,12 +1,6 @@
 mainFont = (0, 0, 0, 255)
 urlBasic = 'https://api.genderize.io?name={personName}'
 fntSrc = "Fonts/LovelyBalloon.ttf"
-wishes1_1 = 'Happy birthday\nto one of the\n'
-wishes1_2 = 'most special people\nin my life!'
-wishes2_1 = 'Today we\ncelebrate you!\n'
-wishes2_2 = 'Happy birthday to\na wonderful person'
-wishes3_1 = 'Wishing you a\nfantastic birthday\nand wonderful'
-wishes3_2 = '\n year ahead.\n \nMake every \nday count!'
 
 backgroundImages = {
     'buffer':
@@ -56,19 +50,25 @@ Wishes = {
         'gender': 'buffer'
     },
     'wishes1': {
-        'text': f'{wishes1_1}{wishes1_2}',
+        'text': 'Wishes/wishes1.txt',
         'gender': 'unisex',
         'fntSize': 60,
         'shadowColor': (244, 164, 96, 255)
     },
     'wishes2': {
-        'text': f'{wishes2_1}{wishes2_2}',
+        'text': 'Wishes/wishes2.txt',
         'gender': 'female',
         'fntSize': 55,
         'shadowColor': (238, 130, 238, 255)
     },
     'wishes3': {
-        'text':  f'{wishes3_1}{wishes3_2}',
+        'text':  'Wishes/wishes3.txt',
+        'gender': 'male',
+        'fntSize': 55,
+        'shadowColor': (135, 206, 250, 255)
+    },
+    'wishes4': {
+        'text':  'Wishes/wishes4.txt',
         'gender': 'male',
         'fntSize': 55,
         'shadowColor': (135, 206, 250, 255)

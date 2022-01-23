@@ -6,6 +6,8 @@ from constants import Frames, backgroundImages, Wishes
 from constants import mainFont, fntSrc
 from constants import urlBasic
 
+from model_io import load_wishes
+
 import requests
 import random
 
@@ -48,7 +50,7 @@ def drawText(txt, wishes, font):
     Returns image with text drawn on it, ready to be combined.
     """
     draw = ImageDraw.Draw(txt)
-    text = Wishes[wishes]['text']
+    text = load_wishes(Wishes[wishes]['text'])
     boundingBox = [150, 150, 1050, 1050]
     shadowFont = Wishes[wishes]['shadowColor']
     x1, y1, x2, y2 = boundingBox
