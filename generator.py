@@ -17,7 +17,7 @@ def getItem(gender, dict):
     Function randomly chooses item from the dictionary.
     Its choose depends on the gender of the person.
     It can be used to choose: background, frame or wishes.
-    Returns choosen item.
+    Returns choosen item. (key of the dictionary)
     """
     item = 'buffer'
     itemGender = dict[item]['gender']
@@ -69,9 +69,7 @@ def combineImage(person, base, wishes):
     and image with wishes text (generated with drawText function)
     Returns birthday card in PIL.Image format.
     """
-
     base, txt, font = setBaseImage(person, base, wishes)
-    pilImage = Image.alpha_composite(base, txt)
     txt = drawText(txt, wishes, font)
     pilImage = Image.alpha_composite(base, txt)
 
@@ -92,7 +90,6 @@ def generate_Card(person):
     Function generates Birthday Card.
     Retruns it as PIL.Image and QPixamp
     """
-
     imgBase = getItem(person.gender(), backgroundImages)
     source = backgroundImages[imgBase]['source']
     wishes = getItem(person.gender(), Wishes)
@@ -115,7 +112,6 @@ class Person():
         self._name = name
 
     def name(self):
-
         return self._name
 
     def gender(self):
