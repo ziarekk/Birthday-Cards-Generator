@@ -5,8 +5,12 @@ App uses this <a href=”https://genderize.io/”>API</a> to guess the gender of
 
 **User Manual**
 1) Clone the repository into a local directory
-2) Run ‘ python3 -m pip install -r requirements.txt ‘.
+2) Make sure you have installed python3 and pip
+3) Run ‘ python3 -m pip install -r requirements.txt ‘.
 This will install all the libraries required to run the application.
-3) Run in terminal ‘python3 gui.py’
+4) Run in terminal ‘python3 gui.py’
 If you’re not in the repo directory, replace gui.py with the direct source to this file.
 
+**Notes**
+
+Documentation.pdf contains information about the code, explanations, and all the things useful for developers.
