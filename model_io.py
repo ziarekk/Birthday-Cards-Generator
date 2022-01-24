@@ -1,6 +1,10 @@
-def read_wishes(file_handle):
+from typing import Union
+from os import PathLike
+
+
+def read_wishes(file_handle: Union[str, PathLike]) -> str:
     """
-    Reads wishes text from file_handle.txt
+    Reads wishes text from file_handle
     """
     wishes = ''
     for line in file_handle:
@@ -9,9 +13,9 @@ def read_wishes(file_handle):
     return wishes2
 
 
-def load_wishes(file_handle):
+def load_wishes(file_handle: Union[str, PathLike]) -> str:
     """
-    Loads wishes text from file_handle
+    Loads file from file_handle, and calls read function
     """
     with open(file_handle) as file:
         wishes = read_wishes(file)

@@ -50,28 +50,28 @@ Wishes = {
         'gender': 'buffer'
     },
     'wishes_1': {
-        'text': 'Wishes/wishes_1.txt',
+        'source': 'Wishes/wishes_1.txt',
         'gender': 'unisex',
         'fntSize': 60,
         'shadowColor': (244, 164, 96, 255)
     },
     'wishes_2': {
-        'text': 'Wishes/wishes_2.txt',
+        'source': 'Wishes/wishes_2.txt',
         'gender': 'female',
         'fntSize': 55,
         'shadowColor': (238, 130, 238, 255)
     },
     'wishes_3': {
-        'text':  'Wishes/wishes_3.txt',
+        'source':  'Wishes/wishes_3.txt',
         'gender': 'male',
         'fntSize': 55,
         'shadowColor': (135, 206, 250, 255)
     },
     'wishes_4': {
-        'text':  'Wishes/wishes_4.txt',
+        'source':  'Wishes/wishes_4.txt',
         'gender': 'male',
         'fntSize': 55,
-        'shadowColor': (135, 206, 250, 255)
+        'shadowColor': (155, 186, 230, 255)
     }
 }
 

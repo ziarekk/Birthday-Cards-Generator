@@ -7,12 +7,9 @@ import sys
 
 class MainMenu(QMainWindow):
     """
-    MainMenu Window, displays stack:
-    [page 0] shows main menu and calendar.
-    [page 1] shows info about the author and credits
-    MainMenu consits of 2 buttons:
-        goCredits: changes stackIndex showing info about author&credits
-        goGenerator: opens up window with iteractive Birthday Card Generator
+    Class MainMenu is used to display window with stack:
+    [0] - menu buttons and calendar
+    [1] - author & credits
     """
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -45,6 +42,9 @@ class MainMenu(QMainWindow):
 
 
 def guiMain(args):
+    """
+    Main function - initializes Gui
+    """
     app = QApplication(args)
     window = MainMenu()
     window.show()

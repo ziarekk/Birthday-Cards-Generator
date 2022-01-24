@@ -17,7 +17,7 @@ class Ui_MainMenu(object):
     def setupUi(self, MainMenu):
         if not MainMenu.objectName():
             MainMenu.setObjectName(u"MainMenu")
-        MainMenu.resize(502, 558)
+        MainMenu.resize(505, 558)
         self.centralwidget = QWidget(MainMenu)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -144,6 +144,13 @@ class Ui_MainMenu(object):
 
         self.verticalLayout_2.addWidget(self.label_6)
 
+        self.label_5 = QLabel(self.credits)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setFont(font5)
+        self.label_5.setMargin(4)
+
+        self.verticalLayout_2.addWidget(self.label_5)
+
         self.label_8 = QLabel(self.credits)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setFont(font5)
@@ -161,7 +168,7 @@ class Ui_MainMenu(object):
         MainMenu.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainMenu)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 502, 22))
+        self.menubar.setGeometry(QRect(0, 0, 505, 22))
         MainMenu.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainMenu)
         self.statusbar.setObjectName(u"statusbar")
@@ -184,7 +191,8 @@ class Ui_MainMenu(object):
         self.returnMenu.setText(QCoreApplication.translate("MainMenu", u"Return to Main Menu", None))
         self.label_3.setText(QCoreApplication.translate("MainMenu", u"It is a semestral project created for 21Z PIPR classes on WUT. Designed and created by Karol Ziarek.", None))
         self.label_4.setText(QCoreApplication.translate("MainMenu", u"Special thanks to creators of frames and fonts used in the project:", None))
-        self.label_6.setText(QCoreApplication.translate("MainMenu", u"Valentine Surpise by:     https://aencreativestudio.com/", None))
-        self.label_8.setText(QCoreApplication.translate("MainMenu", u"Fantastic Frames by:    https://www.pngtree.com/", None))
+        self.label_6.setText(QCoreApplication.translate("MainMenu", u"Valentine Surprise by:    https://aencreativestudio.com/", None))
+        self.label_5.setText(QCoreApplication.translate("MainMenu", u"Lovely Balloon by:          https://aencreativestudio.com/", None))
+        self.label_8.setText(QCoreApplication.translate("MainMenu", u"Fantastic Frames by:     https://www.pngtree.com/", None))
     # retranslateUi
 

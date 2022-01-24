@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
+    <width>505</width>
     <height>558</height>
    </rect>
   </property>
@@ -215,7 +215,23 @@
              </font>
             </property>
             <property name="text">
-             <string>Valentine Surpise by:     https://aencreativestudio.com/</string>
+             <string>Valentine Surprise by:    https://aencreativestudio.com/</string>
+            </property>
+            <property name="margin">
+             <number>4</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>Lovely Balloon by:          https://aencreativestudio.com/</string>
             </property>
             <property name="margin">
              <number>4</number>
@@ -231,7 +247,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Fantastic Frames by:    https://www.pngtree.com/</string>
+             <string>Fantastic Frames by:     https://www.pngtree.com/</string>
             </property>
             <property name="margin">
              <number>4</number>
@@ -251,7 +267,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>502</width>
+     <width>505</width>
      <height>22</height>
     </rect>
    </property>

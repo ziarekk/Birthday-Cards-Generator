@@ -15,8 +15,8 @@ def test_init_Person_F():
 
 
 def test_init_Person_wrong_data():
-    person1 = Person('Jan Paweł 2')
-    assert person1.gender() == 'None'
+    person1 = Person('NotAName')
+    assert person1.gender() == 'unisex'
 
 
 def test_getItem_frame_typical(monkeypatch):
